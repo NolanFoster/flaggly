@@ -1,0 +1,39 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "flaggly",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-09-27",
+	"observability": {
+		"enabled": true
+	},
+	"vars": {
+		"ORIGIN": "nolanfoster.me, seasonedapp.com",
+		"ENABLE_ANALYTICS": "true"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "FLAGGLY_KV",
+			"id": "d3d6de05bdc9476e8c77f8b33d7c0a57"
+		}
+	],
+	"ratelimits": [
+		{
+			"name": "FLAGGLY_RATE_LIMITER",
+			"namespace_id": "1101",
+			"simple": {
+				"limit": 100,
+				"period": 60
+			}
+		}
+	],
+	"analytics_engine_datasets": [
+		{
+			"binding": "FLAGGLY_ANALYTICS",
+			"dataset": "flaggly"
+		}
+	]
+}
